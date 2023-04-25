@@ -21,7 +21,11 @@ int handle_write_char(char c, char buffer[],
 	UNUSED(precision);
 	UNUSED(size);
 
-	
+	if (flags & F_ZERO)
+                padd = '0';
+
+        buffer[i++] = c;
+        buffer[i] = '\0';	
 
 	if (width > 1)
 	{
@@ -93,10 +97,7 @@ int write_num(int ind, char buffer[],
 {
 	int i, padd_start = 1;
 
-	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0' && width == 0)
-		return (0); /* printf(".0d", 0)  no char is printed */
-	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
-		buffer[ind] = padd = ' '; /* width is displayed with padding ' ' */
+	
 	if (prec > 0 && prec < length)
 		padd = ' ';
 	while (prec > length)
